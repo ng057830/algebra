@@ -3,37 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Problemas</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ejercicio de Matemáticas</title>
 
-    <!-- Cargar KaTeX desde el CDN -->
+    <!-- Cargar KaTeX desde CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
             onload="renderMathInElement(document.body);"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .math {
+            font-size: 20px;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+    </style>
 </head>
 <body>
-
-    <!-- Menú principal -->
-    <div class="container" id="menu">
-        <h1>Menú de Problemas</h1>
-        <button id="startExercise11">Ejercicio 11</button>
-    </div>
-
-    <!-- Contenedor para el Ejercicio 11 -->
-    <div class="container hidden" id="exercise11">
+    <div class="container" id="exerciseContainer">
         <h1>Ejercicio 11: Multiplicación de Monomios</h1>
+        
+        <!-- Introducción -->
+        <p>En este ejercicio aprenderemos a multiplicar dos monomios: <span class="math">\( 4x^2 \cdot (-5x^3) \)</span>. Vamos a resolverlo paso a paso.</p>
+        
+        <!-- Paso 1: Identificar los signos -->
+        <p><strong>Paso 1:</strong> ¿Qué signo tiene el resultado de multiplicar un número positivo por un número negativo?</p>
+        <select id="signSelect">
+            <option value="positive">Positivo (+)</option>
+            <option value="negative">Negativo (-)</option>
+        </select>
+        <button onclick="checkSign()">Comprobar</button>
+        <p id="feedbackSign"></p>
 
-        <!-- Sección del ejercicio -->
-        <div id="exercise-content">
-            <!-- Aquí se cargará el ejercicio 11 desde el archivo exercise11.js -->
+        <!-- Paso 2: Multiplicar los coeficientes -->
+        <div id="step2" class="hidden">
+            <p><strong>Paso 2:</strong> Multiplica los coeficientes numéricos: <span class="math">\( 4 \)</span> y <span class="math">\( -5 \)</span></p>
+            <input type="text" id="coefInput" placeholder="Escribe el resultado">
+            <button onclick="checkCoef()">Comprobar</button>
+            <p id="feedbackCoef"></p>
+            <p>Recuerda, al multiplicar un número positivo por un número negativo, el resultado será negativo.</p>
         </div>
 
-        <!-- Botón para volver al menú -->
-        <button id="backToMenu">Volver al Menú</button>
+        <!-- Paso 3: Identificar la variable -->
+        <div id="step3" class="hidden">
+            <p><strong>Paso 3:</strong> ¿Cuál es la variable involucrada en este caso?</p>
+            <input type="checkbox" id="varX"> <label for="varX">\\( x \\)</label>
+            <button onclick="checkVariable()">Comprobar</button>
+            <p id="feedbackVar"></p>
+        </div>
+
+        <!-- Paso 4: Sumar los exponentes -->
+        <div id="step4" class="hidden">
+            <p><strong>Paso 4:</strong> Suma los exponentes de \\( x^2 \\) y \\( x^3 \\):</p>
+            <p>Cuando multiplicamos potencias con la misma base, sumamos los exponentes. En este caso:</p>
+            <ul>
+                <li>El exponente de \\( x \\) en el primer término es 2</li>
+                <li>El exponente de \\( x \\) en el segundo término es 3</li>
+            </ul>
+            <p>Escribe el resultado de sumar los exponentes:</p>
+            <input type="text" id="expInput" placeholder="Escribe el resultado">
+            <button onclick="checkExp()">Comprobar</button>
+            <p id="feedbackExp"></p>
+        </div>
+
+        <!-- Paso 5: Resultado final -->
+        <div id="step5" class="hidden">
+            <p><strong>Paso 5:</strong> Ahora juntamos todo: el signo, los coeficientes y la variable con su exponente:</p>
+            <ul>
+                <li>El signo es negativo</li>
+                <li>El coeficiente es <span class="math">-20</span></li>
+                <li>La variable es \\( x \\) y su exponente es 5</li>
+            </ul>
+            <h2>Resultado final:</h2>
+            <p id="finalResult"></p>
+        </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="exercise11.js"></script>
+    <script>
+        // Variables para almacenar respuestas correctas
+        let correctSign = false;
+        let correctCoef = false;
+        let correctVar = false;
+        let correctExp = false;
+
+        // Paso 1: Verificar el signo
+        function checkSign() {
+            const selectedSign = document.getElementById('signSelect').value;
+            const feedback = document.getElementById('feedbackSign');
+            if (selectedSign === 'negative') {
+                correctSign = true;
+                feedback.textContent = '¡Correcto! El signo es negativo.';
+                feedback.className = 'correct';
+                document.getElementById('step2').classList.remove('hidden');
+            } else {
+                correctSign = false;
+                feedback.textContent = 'Incorrecto. Multiplicar un número positivo por uno negativo da como resultado un número negativo.';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Paso 2: Verificar los coeficientes
+        function checkCoef() {
+            const coefInput = document.getElementById('coefInput').value.trim();
+            const feedback = document.getElementById('feedbackCoef');
+            if (coefInput === '-20') {
+                correctCoef = true;
+                feedback.textContent = '¡Correcto! El coeficiente es -20.';
+                feedback.className = 'correct';
+                document.getElementById('step3').classList.remove('hidden');
+            } else {
+                correctCoef = false;
+                feedback.textContent = 'Incorrecto. El coeficiente correcto es -20.';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Paso 3: Verificar la variable
+        function checkVariable() {
+            const varX = document.getElementById('varX').checked;
+            const feedback = document.getElementById('feedbackVar');
+            if (varX) {
+                correctVar = true;
+                feedback.textContent = '¡Correcto! La variable es \\( x \\).';
+                feedback.className = 'correct';
+                document.getElementById('step4').classList.remove('hidden');
+            } else {
+                correctVar = false;
+                feedback.textContent = 'Incorrecto. La variable en este caso es \\( x \\).';
+                feedback.className = 'incorrect';
+            }
+            renderMathInElement(document.getElementById('feedbackVar'));
+        }
+
+        // Paso 4: Verificar los exponentes
+        function checkExp() {
+            const expInput = document.getElementById('expInput').value.trim();
+            const feedback = document.getElementById('feedbackExp');
+            if (expInput === '5') {
+                correctExp = true;
+                feedback.textContent = '¡Correcto! La suma de los exponentes es 5.';
+                feedback.className = 'correct';
+                document.getElementById('step5').classList.remove('hidden');
+                displayFinalResult();
+            } else {
+                correctExp = false;
+                feedback.textContent = 'Incorrecto. La suma correcta de los exponentes es 5.';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Mostrar resultado final
+        function displayFinalResult() {
+            if (correctSign && correctCoef && correctVar && correctExp) {
+                document.getElementById('finalResult').innerHTML = "\\( -20x^5 \\)";
+                renderMathInElement(document.getElementById('finalResult'));  // Renderizar con KaTeX
+            } else {
+                document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
+            }
+        }
+    </script>
 </body>
 </html>

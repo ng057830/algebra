@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio de Matemáticas</title>
-    
-    <!-- Cargar MathJax desde el CDN -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Cargar KaTeX desde CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body);"></script>
 
     <style>
         body {
@@ -60,6 +62,10 @@
         .hidden {
             display: none;
         }
+
+        .math {
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -67,7 +73,7 @@
         <h1>Ejercicio 11: Multiplicación de Monomios</h1>
         
         <!-- Expresión a resolver -->
-        <p>Multiplica los monomios: \\( 4x^2 \cdot (-5x^3) \\)</p>
+        <p>Multiplica los monomios: <span class="math">\( 4x^2 \cdot (-5x^3) \)</span></p>
 
         <!-- Paso 1: Signo del resultado -->
         <p>Paso 1: Selecciona el signo del resultado:</p>
@@ -78,13 +84,13 @@
         <p id="feedbackSign"></p>
 
         <!-- Paso 2: Coeficientes -->
-        <p>Paso 2: Multiplica los coeficientes: \\( 4 \\) y \\( -5 \\)</p>
+        <p>Paso 2: Multiplica los coeficientes: <span class="math">\( 4 \)</span> y <span class="math">\( -5 \)</span></p>
         <input type="text" id="coefInput" placeholder="Escribe el resultado">
         <button onclick="checkCoef()">Comprobar</button>
         <p id="feedbackCoef"></p>
 
         <!-- Paso 3: Suma de exponentes -->
-        <p>Paso 3: Suma los exponentes de \\( x^2 \\) y \\( x^3 \\):</p>
+        <p>Paso 3: Suma los exponentes de <span class="math">\( x^2 \)</span> y <span class="math">\( x^3 \)</span>:</p>
         <input type="text" id="expInput" placeholder="Escribe la suma de los exponentes">
         <button onclick="checkExp()">Comprobar</button>
         <p id="feedbackExp"></p>
@@ -143,14 +149,8 @@
         // Mostrar resultado final
         function displayFinalResult() {
             if (correctSign && correctCoef && correctExp) {
-                // Asegurar que MathJax esté cargado antes de usarlo
-                if (window.MathJax) {
-                    MathJax.typesetPromise(["\\[ -20x^5 \\]"]).then(() => {
-                        document.getElementById('finalResult').innerHTML = "\\[ -20x^5 \\]";
-                    });
-                } else {
-                    document.getElementById('finalResult').textContent = 'No se ha cargado MathJax aún.';
-                }
+                document.getElementById('finalResult').innerHTML = "\\( -20x^5 \\)";
+                renderMathInElement(document.getElementById('finalResult'));  // Renderizar con KaTeX
             } else {
                 document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
             }

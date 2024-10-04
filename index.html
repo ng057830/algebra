@@ -3,47 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Problemas</title>
+    <title>Ejercicio de Matemáticas</title>
     
-    <!-- Cargar MathJax desde el CDN oficial -->
-    <script>
-        window.MathJax = {
-          tex: {
-            inlineMath: [['\\(', '\\)'], ['$', '$']],
-            displayMath: [['\\[', '\\]']],
-          },
-          svg: {
-            fontCache: 'global'
-          }
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <!-- Cargar MathJax desde el CDN -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
-
+        
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             background: white;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
         }
-
+        
         h1 {
             color: #333;
+            text-align: center;
         }
-
+        
         button {
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -57,9 +47,14 @@
 
         input[type="text"] {
             padding: 10px;
-            font-size: 18px;
+            font-size: 16px;
             margin: 10px 0;
-            width: 200px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        p {
+            font-size: 18px;
         }
 
         .hidden {
@@ -68,130 +63,90 @@
     </style>
 </head>
 <body>
-    <div class="container" id="menu">
-        <h1>Menú de Problemas</h1>
-        <p>Selecciona un problema para resolverlo:</p>
+    <div class="container" id="exerciseContainer">
+        <h1>Ejercicio 11: Multiplicación de Monomios</h1>
         
-        <!-- Botón para acceder al Ejercicio 11 -->
-        <button id="startExercise11">Ejercicio 11</button>
-    </div>
-
-    <!-- Contenedor para el contenido del ejercicio 11 -->
-    <div class="container hidden" id="exercise11">
-        <h1>Ejercicio 11: Multiplicar Monomios</h1>
+        <!-- Expresión a resolver -->
         <p>Multiplica los monomios: \\( 4x^2 \cdot (-5x^3) \\)</p>
 
-        <!-- Paso 1: Identificar el signo -->
+        <!-- Paso 1: Signo del resultado -->
         <p>Paso 1: Selecciona el signo del resultado:</p>
         <select id="signSelect">
-            <option value="pos">Positivo (+)</option>
-            <option value="neg">Negativo (-)</option>
+            <option value="positive">Positivo (+)</option>
+            <option value="negative">Negativo (-)</option>
         </select>
-        <p id="feedbackStep1"></p>
+        <p id="feedbackSign"></p>
 
-        <!-- Paso 2: ¿Cuáles son las variables involucradas? -->
-        <p>Paso 2: ¿Qué variables están involucradas en la multiplicación?</p>
-        <label><input type="checkbox" id="varX"> \\( x \\)</label>
-        <label><input type="checkbox" id="varY"> \\( y \\)</label>
-        <p id="feedbackStep2"></p>
+        <!-- Paso 2: Coeficientes -->
+        <p>Paso 2: Multiplica los coeficientes: \\( 4 \\) y \\( -5 \\)</p>
+        <input type="text" id="coefInput" placeholder="Escribe el resultado">
+        <button onclick="checkCoef()">Comprobar</button>
+        <p id="feedbackCoef"></p>
 
-        <!-- Paso 3: Multiplicar los coeficientes numéricos -->
-        <p>Paso 3: Multiplica los coeficientes numéricos \\( 4 \\) y \\( -5 \\):</p>
-        <input type="text" id="coefInput" placeholder="Escribe aquí">
-        <button onclick="checkStep3()">Comprobar</button>
-        <p id="feedbackStep3"></p>
+        <!-- Paso 3: Suma de exponentes -->
+        <p>Paso 3: Suma los exponentes de \\( x^2 \\) y \\( x^3 \\):</p>
+        <input type="text" id="expInput" placeholder="Escribe la suma de los exponentes">
+        <button onclick="checkExp()">Comprobar</button>
+        <p id="feedbackExp"></p>
 
-        <!-- Paso 4: ¿Qué exponentes tienen las variables? -->
-        <p>Paso 4: ¿Cuáles son los exponentes de las variables \\( x^2 \\) y \\( x^3 \\)?</p>
-        <p>Exponente de \\( x \\) en el primer monomio: <input type="text" id="exp1Input" placeholder="Escribe aquí"></p>
-        <p>Exponente de \\( x \\) en el segundo monomio: <input type="text" id="exp2Input" placeholder="Escribe aquí"></p>
-        <button onclick="checkStep4()">Comprobar</button>
-        <p id="feedbackStep4"></p>
-
-        <!-- Paso 5: Sumar los exponentes -->
-        <p>Paso 5: Suma los exponentes de \\( x \\):</p>
-        <input type="text" id="sumExpInput" placeholder="Escribe aquí">
-        <button onclick="checkStep5()">Comprobar</button>
-        <p id="feedbackStep5"></p>
-
-        <!-- Resultado final en LaTeX -->
-        <h2>Resultado Final:</h2>
+        <!-- Resultado final -->
+        <h2>Resultado Final</h2>
         <p id="finalResult"></p>
     </div>
 
     <script>
-        // Mostrar el ejercicio 11
-        document.getElementById('startExercise11').addEventListener('click', function() {
-            // Ocultar el menú y mostrar el ejercicio
-            document.getElementById('menu').classList.add('hidden');
-            document.getElementById('exercise11').classList.remove('hidden');
-            MathJax.typeset();  // Renderizar LaTeX
-        });
+        // Variables para almacenar respuestas correctas
+        let correctSign = false;
+        let correctCoef = false;
+        let correctExp = false;
 
-        // Validar el signo seleccionado
+        // Paso 1: Verificar el signo
         document.getElementById('signSelect').addEventListener('change', function() {
-            var sign = document.getElementById('signSelect').value;
-            var feedback = document.getElementById('feedbackStep1');
-
-            if (sign === 'neg') {
-                feedback.innerHTML = "¡Correcto! El resultado será negativo.";
+            const selectedSign = document.getElementById('signSelect').value;
+            const feedback = document.getElementById('feedbackSign');
+            if (selectedSign === 'negative') {
+                correctSign = true;
+                feedback.textContent = '¡Correcto! El signo es negativo.';
             } else {
-                feedback.innerHTML = "Recuerda que el resultado es negativo porque multiplicas un número positivo con uno negativo.";
-            }
-            MathJax.typeset();  // Re-renderizar LaTeX
-        });
-
-        // Validar las variables involucradas
-        document.getElementById('varX').addEventListener('change', function() {
-            var varX = document.getElementById('varX').checked;
-            var feedback = document.getElementById('feedbackStep2');
-
-            if (varX) {
-                feedback.innerHTML = "¡Correcto! La variable involucrada es \\( x \\).";
-                MathJax.typeset();  // Re-renderizar LaTeX
-            } else {
-                feedback.innerHTML = "Selecciona la variable correcta.";
+                correctSign = false;
+                feedback.textContent = 'Recuerda, el resultado es negativo porque multiplicas un número positivo con uno negativo.';
             }
         });
 
-        // Validar la multiplicación de coeficientes
-        function checkStep3() {
-            var input = document.getElementById('coefInput').value.trim();
-            var feedback = document.getElementById('feedbackStep3');
-
-            if (input == "-20") {
-                feedback.innerHTML = "¡Correcto! El coeficiente es -20.";
+        // Paso 2: Verificar los coeficientes
+        function checkCoef() {
+            const coefInput = document.getElementById('coefInput').value.trim();
+            const feedback = document.getElementById('feedbackCoef');
+            if (coefInput === '-20') {
+                correctCoef = true;
+                feedback.textContent = '¡Correcto! El coeficiente es -20.';
             } else {
-                feedback.innerHTML = "Incorrecto. Multiplica 4 y -5.";
+                correctCoef = false;
+                feedback.textContent = 'Incorrecto. El coeficiente correcto es -20.';
             }
         }
 
-        // Validar los exponentes de las variables
-        function checkStep4() {
-            var exp1 = document.getElementById('exp1Input').value.trim();
-            var exp2 = document.getElementById('exp2Input').value.trim();
-            var feedback = document.getElementById('feedbackStep4');
-
-            if (exp1 == "2" && exp2 == "3") {
-                feedback.innerHTML = "¡Correcto! Los exponentes son 2 y 3.";
+        // Paso 3: Verificar los exponentes
+        function checkExp() {
+            const expInput = document.getElementById('expInput').value.trim();
+            const feedback = document.getElementById('feedbackExp');
+            if (expInput === '5') {
+                correctExp = true;
+                feedback.textContent = '¡Correcto! La suma de los exponentes es 5.';
+                displayFinalResult();
             } else {
-                feedback.innerHTML = "Revisa los exponentes: uno es 2 y el otro es 3.";
+                correctExp = false;
+                feedback.textContent = 'Incorrecto. La suma correcta de los exponentes es 5.';
             }
         }
 
-        // Validar la suma de exponentes
-        function checkStep5() {
-            var input = document.getElementById('sumExpInput').value.trim();
-            var feedback = document.getElementById('feedbackStep5');
-
-            if (input == "5") {
-                feedback.innerHTML = "¡Correcto! La suma de los exponentes es 5.";
-                // Mostrar el resultado final en LaTeX
-                document.getElementById('finalResult').innerHTML = "\\[ -20x^5 \\]";
-                MathJax.typeset();  // Re-renderizar LaTeX
+        // Mostrar resultado final
+        function displayFinalResult() {
+            if (correctSign && correctCoef && correctExp) {
+                document.getElementById('finalResult').innerHTML = '\\[ -20x^5 \\]';
+                MathJax.typeset();  // Renderizar LaTeX
             } else {
-                feedback.innerHTML = "Incorrecto. Recuerda sumar: \\(2 + 3 = 5\\).";
-                MathJax.typeset();  // Re-renderizar LaTeX
+                document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
             }
         }
     </script>

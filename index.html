@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Problemas</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Cargar MathJax desde el CDN oficial -->
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)'], ['$', '$']],
+            displayMath: [['\\[', '\\]']],
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+    <div class="container" id="menu">
+        <h1>Menú de Problemas</h1>
+        <p>Selecciona un problema para resolverlo:</p>
+        
+        <!-- Botón para acceder al Ejercicio 11 -->
+        <button id="startExercise11">Ejercicio 11</button>
+    </div>
+
+    <!-- Contenedor para el contenido del ejercicio 11 -->
+    <div class="container hidden" id="exercise11">
+        <h1>Ejercicio 11: Multiplicar Monomios</h1>
+        <p>Multiplica los monomios: \\( 4x^2 \cdot (-5x^3) \\)</p>
+
+        <!-- Paso 1: Identificar el signo -->
+        <p>Paso 1: Selecciona el signo del resultado:</p>
+        <select id="signSelect">
+            <option value="pos">Positivo (+)</option>
+            <option value="neg">Negativo (-)</option>
+        </select>
+        <p id="feedbackStep1"></p>
+
+        <!-- Paso 2: ¿Cuáles son las variables involucradas? -->
+        <p>Paso 2: ¿Qué variables están involucradas en la multiplicación?</p>
+        <label><input type="checkbox" id="varX"> \\( x \\)</label>
+        <label><input type="checkbox" id="varY"> \\( y \\)</label>
+        <p id="feedbackStep2"></p>
+
+        <!-- Paso 3: Multiplicar los coeficientes numéricos -->
+        <p>Paso 3: Multiplica los coeficientes numéricos \\( 4 \\) y \\( -5 \\):</p>
+        <input type="text" id="coefInput" placeholder="Escribe aquí">
+        <button onclick="checkStep3()">Comprobar</button>
+        <p id="feedbackStep3"></p>
+
+        <!-- Paso 4: ¿Qué exponentes tienen las variables? -->
+        <p>Paso 4: ¿Cuáles son los exponentes de las variables \\( x^2 \\) y \\( x^3 \\)?</p>
+        <p>Exponente de \\( x \\) en el primer monomio: <input type="text" id="exp1Input" placeholder="Escribe aquí"></p>
+        <p>Exponente de \\( x \\) en el segundo monomio: <input type="text" id="exp2Input" placeholder="Escribe aquí"></p>
+        <button onclick="checkStep4()">Comprobar</button>
+        <p id="feedbackStep4"></p>
+
+        <!-- Paso 5: Sumar los exponentes -->
+        <p>Paso 5: Suma los exponentes de \\( x \\):</p>
+        <input type="text" id="sumExpInput" placeholder="Escribe aquí">
+        <button onclick="checkStep5()">Comprobar</button>
+        <p id="feedbackStep5"></p>
+
+        <!-- Resultado final en LaTeX -->
+        <h2>Resultado Final:</h2>
+        <p id="finalResult"></p>
+    </div>
+
+    <!-- Script para la lógica del ejercicio 11 -->
+    <script src="exercise11.js"></script>
+
+    <!-- Script para mostrar el ejercicio -->
+    <script>
+        document.getElementById('startExercise11').addEventListener('click', function() {
+            // Ocultar el menú de problemas y mostrar el ejercicio 11
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('exercise11').classList.remove('hidden');
+            MathJax.typeset();  // Renderizar las fórmulas de LaTeX después de que se muestren
+        });
+    </script>
+</body>
+</html>

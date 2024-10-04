@@ -1,160 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio de Matemáticas</title>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
 
-    <!-- Cargar KaTeX desde CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body);"></script>
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+h1 {
+    color: #333;
+    text-align: center;
+}
 
-        button:hover {
-            background-color: #45a049;
-        }
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
+button:hover {
+    background-color: #45a049;
+}
 
-        p {
-            font-size: 18px;
-        }
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-        .hidden {
-            display: none;
-        }
+p {
+    font-size: 18px;
+}
 
-        .math {
-            font-size: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container" id="exerciseContainer">
-        <h1>Ejercicio 11: Multiplicación de Monomios</h1>
-        
-        <!-- Expresión a resolver -->
-        <p>Multiplica los monomios: <span class="math">\( 4x^2 \cdot (-5x^3) \)</span></p>
+.hidden {
+    display: none;
+}
 
-        <!-- Paso 1: Signo del resultado -->
-        <p>Paso 1: Selecciona el signo del resultado:</p>
-        <select id="signSelect">
-            <option value="positive">Positivo (+)</option>
-            <option value="negative">Negativo (-)</option>
-        </select>
-        <p id="feedbackSign"></p>
-
-        <!-- Paso 2: Coeficientes -->
-        <p>Paso 2: Multiplica los coeficientes: <span class="math">\( 4 \)</span> y <span class="math">\( -5 \)</span></p>
-        <input type="text" id="coefInput" placeholder="Escribe el resultado">
-        <button onclick="checkCoef()">Comprobar</button>
-        <p id="feedbackCoef"></p>
-
-        <!-- Paso 3: Suma de exponentes -->
-        <p>Paso 3: Suma los exponentes de <span class="math">\( x^2 \)</span> y <span class="math">\( x^3 \)</span>:</p>
-        <input type="text" id="expInput" placeholder="Escribe la suma de los exponentes">
-        <button onclick="checkExp()">Comprobar</button>
-        <p id="feedbackExp"></p>
-
-        <!-- Resultado final -->
-        <h2>Resultado Final</h2>
-        <p id="finalResult"></p>
-    </div>
-
-    <script>
-        // Variables para almacenar respuestas correctas
-        let correctSign = false;
-        let correctCoef = false;
-        let correctExp = false;
-
-        // Paso 1: Verificar el signo
-        document.getElementById('signSelect').addEventListener('change', function() {
-            const selectedSign = document.getElementById('signSelect').value;
-            const feedback = document.getElementById('feedbackSign');
-            if (selectedSign === 'negative') {
-                correctSign = true;
-                feedback.textContent = '¡Correcto! El signo es negativo.';
-            } else {
-                correctSign = false;
-                feedback.textContent = 'Recuerda, el resultado es negativo porque multiplicas un número positivo con uno negativo.';
-            }
-        });
-
-        // Paso 2: Verificar los coeficientes
-        function checkCoef() {
-            const coefInput = document.getElementById('coefInput').value.trim();
-            const feedback = document.getElementById('feedbackCoef');
-            if (coefInput === '-20') {
-                correctCoef = true;
-                feedback.textContent = '¡Correcto! El coeficiente es -20.';
-            } else {
-                correctCoef = false;
-                feedback.textContent = 'Incorrecto. El coeficiente correcto es -20.';
-            }
-        }
-
-        // Paso 3: Verificar los exponentes
-        function checkExp() {
-            const expInput = document.getElementById('expInput').value.trim();
-            const feedback = document.getElementById('feedbackExp');
-            if (expInput === '5') {
-                correctExp = true;
-                feedback.textContent = '¡Correcto! La suma de los exponentes es 5.';
-                displayFinalResult();
-            } else {
-                correctExp = false;
-                feedback.textContent = 'Incorrecto. La suma correcta de los exponentes es 5.';
-            }
-        }
-
-        // Mostrar resultado final
-        function displayFinalResult() {
-            if (correctSign && correctCoef && correctExp) {
-                document.getElementById('finalResult').innerHTML = "\\( -20x^5 \\)";
-                renderMathInElement(document.getElementById('finalResult'));  // Renderizar con KaTeX
-            } else {
-                document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
-            }
-        }
-    </script>
-</body>
-</html>
+#finalResult {
+    font-size: 24px;
+    color: #000;
+    margin-top: 20px;
+}

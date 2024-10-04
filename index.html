@@ -47,8 +47,20 @@
             background-color: #45a049;
         }
 
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         p {
             font-size: 18px;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .math {
@@ -85,38 +97,91 @@
         <div id="step2" class="hidden">
             <p><strong>Paso 2:</strong> Ahora multiplica los números (coeficientes) de los monomios:</p>
             <p><span class="math">\( 4 \cdot (-5) \)</span></p>
-            <button onclick="showCoef()">Ver coeficiente</button>
-            <p id="coefResult"></p>
+            <input type="text" id="coefInput" placeholder="Escribe el resultado">
+            <button onclick="checkCoef()">Comprobar</button>
+            <p id="feedbackCoef"></p>
+            <p>Recuerda, multiplicar un número positivo por uno negativo siempre da un resultado negativo.</p>
         </div>
 
-        <!-- Paso 3 en adelante: Mostrar todo el resultado final directamente -->
-        <div id="finalResult" class="hidden">
-            <p><strong>Paso 3:</strong> Ahora juntamos todo. Hemos determinado que:</p>
+        <!-- Paso 3: Identificar la variable -->
+        <div id="step3" class="hidden">
+            <p><strong>Paso 3:</strong> Ahora observa la variable que estamos multiplicando. En ambos términos aparece la misma variable:</p>
+            <p><span class="math">\( x^2 \cdot x^3 \)</span></p>
+            <p>Selecciona la variable involucrada:</p>
+            <input type="checkbox" id="varX"> <label for="varX">\( x \)</label>
+            <input type="checkbox" id="varY"> <label for="varY">\( y \)</label>
+            <input type="checkbox" id="varZ"> <label for="varZ">\( z \)</label>
+            <input type="checkbox" id="varA"> <label for="varA">\( a \)</label>
+            <button onclick="checkVariable()">Comprobar</button>
+            <p id="feedbackVar"></p>
+        </div>
+
+        <!-- Paso 4: Sumar los exponentes -->
+        <div id="step4" class="hidden">
+            <p><strong>Paso 4:</strong> Cuando multiplicamos potencias con la misma base, sumamos los exponentes. En este caso, los exponentes son:</p>
+            <ul>
+                <li><span class="math">\( x^2 \)</span> en el primer término</li>
+                <li><span class="math">\( x^3 \)</span> en el segundo término</li>
+            </ul>
+            <p>Suma los exponentes:</p>
+            <input type="text" id="expInput" placeholder="Escribe la suma de los exponentes">
+            <button onclick="checkExp()">Comprobar</button>
+            <p id="feedbackExp"></p>
+        </div>
+
+        <!-- Paso 5: Resultado final -->
+        <div id="step5" class="hidden">
+            <p><strong>Paso 5:</strong> Ahora juntamos todo. Hemos determinado que:</p>
             <ul>
                 <li>El signo del resultado es negativo.</li>
                 <li>El coeficiente es <span class="math">-20</span>.</li>
                 <li>La variable es \( x \), y la suma de sus exponentes es 5.</li>
             </ul>
             <h2>Resultado final:</h2>
-            <p id="finalProjection">\( -20x^5 \)</p>
+            <p id="finalResult"></p>
         </div>
 
         <!-- Ejercicio 12 -->
         <h1>Ejercicio 12: Multiplicar Binomios</h1>
         
         <!-- Introducción -->
-        <p>Ahora vamos a multiplicar dos binomios: <span class="math">\( (5x - 4)(2x + 3) \)</span>. Este proceso también se resolverá de forma directa.</p>
+        <p>Ahora vamos a multiplicar dos binomios: <span class="math">\( (5x - 4)(2x + 3) \)</span>. Este proceso también se resolverá paso a paso.</p>
         
-        <button onclick="showBinomial()">Ver multiplicación de binomios</button>
-        <div id="binomialResult" class="hidden">
-            <p>El resultado es: </p>
-            <p id="binomialProjection">\( -12 + 7x + 10x^2 \)</p>
+        <!-- Paso 1: Aplicar la propiedad distributiva al primer término -->
+        <p><strong>Paso 1:</strong> Aplicamos la propiedad distributiva al primer término. Multiplicamos el \( 5x \) por cada término del segundo binomio:</p>
+        <p>\( 5x \cdot 2x \) y \( 5x \cdot 3 \)</p>
+        <input type="text" id="distInput1" placeholder="Escribe el resultado de \( 5x \cdot 2x \)">
+        <input type="text" id="distInput2" placeholder="Escribe el resultado de \( 5x \cdot 3 \)">
+        <button onclick="checkDistributive()">Comprobar</button>
+        <p id="feedbackDist"></p>
+
+        <!-- Paso 2: Aplicar la propiedad distributiva al segundo término -->
+        <div id="step6" class="hidden">
+            <p><strong>Paso 2:</strong> Ahora multiplicamos el segundo término, \( -4 \), por cada término del segundo binomio:</p>
+            <p>\( -4 \cdot 2x \) y \( -4 \cdot 3 \)</p>
+            <input type="text" id="distInput3" placeholder="Escribe el resultado de \( -4 \cdot 2x \)">
+            <input type="text" id="distInput4" placeholder="Escribe el resultado de \( -4 \cdot 3 \)">
+            <button onclick="checkDistributive2()">Comprobar</button>
+            <p id="feedbackDist2"></p>
+        </div>
+
+        <!-- Paso 3: Juntar todos los términos -->
+        <div id="step7" class="hidden">
+            <p><strong>Paso 3:</strong> Finalmente, juntamos todos los términos y los simplificamos. Escribe el resultado final:</p>
+            <input type="text" id="finalBinomial" placeholder="Escribe el resultado final">
+            <button onclick="checkFinalBinomial()">Comprobar</button>
+            <p id="feedbackFinalBinomial"></p>
         </div>
     </div>
 
     <script>
         // Variables para almacenar respuestas correctas
         let correctSign = false;
+        let correctCoef = false;
+        let correctVar = false;
+        let correctExp = false;
+        let correctDist1 = false;
+        let correctDist2 = false;
 
         // Paso 1: Verificar el signo del ejercicio 11
         function checkSign() {
@@ -134,17 +199,116 @@
             }
         }
 
-        // Paso 2: Mostrar coeficiente de la multiplicación del ejercicio 11
-        function showCoef() {
-            const coefResult = document.getElementById('coefResult');
-            coefResult.textContent = 'El coeficiente es -20.';
-            coefResult.className = 'correct';
-            document.getElementById('finalResult').classList.remove('hidden');
+        // Paso 2: Verificar los coeficientes del ejercicio 11
+        function checkCoef() {
+            const coefInput = document.getElementById('coefInput').value.trim();
+            const feedback = document.getElementById('feedbackCoef');
+            if (coefInput === '-20') {
+                correctCoef = true;
+                feedback.textContent = '¡Correcto! El coeficiente es -20.';
+                feedback.className = 'correct';
+                document.getElementById('step3').classList.remove('hidden');
+            } else {
+                correctCoef = false;
+                feedback.textContent = 'Incorrecto. El coeficiente correcto es -20.';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Paso 3: Verificar la variable del ejercicio 11
+        function checkVariable() {
+            const varX = document.getElementById('varX').checked;
+            const varY = document.getElementById('varY').checked;
+            const varZ = document.getElementById('varZ').checked;
+            const varA = document.getElementById('varA').checked;
+            const feedback = document.getElementById('feedbackVar');
+            if (varX && !varY && !varZ && !varA) {
+                correctVar = true;
+                feedback.textContent = '¡Correcto! La variable involucrada es \( x \).';
+                feedback.className = 'correct';
+                document.getElementById('step4').classList.remove('hidden');
+                renderMathInElement(document.getElementById('step4'));
+            } else {
+                correctVar = false;
+                feedback.textContent = 'Incorrecto. La variable involucrada es \( x \).';
+                feedback.className = 'incorrect';
+            }
+            renderMathInElement(document.getElementById('feedbackVar'));
+        }
+
+        // Paso 4: Verificar los exponentes del ejercicio 11
+        function checkExp() {
+            const expInput = document.getElementById('expInput').value.trim();
+            const feedback = document.getElementById('feedbackExp');
+            if (expInput === '5') {
+                correctExp = true;
+                feedback.textContent = '¡Correcto! La suma de los exponentes es 5.';
+                feedback.className = 'correct';
+                document.getElementById('step5').classList.remove('hidden');
+                displayFinalResult();
+            } else {
+                correctExp = false;
+                feedback.textContent = 'Incorrecto. La suma correcta de los exponentes es 5.';
+                feedback.className = 'incorrect';
+            }
         }
 
         // Mostrar resultado final del ejercicio 11
-        function showBinomial() {
-            document.getElementById('binomialResult').classList.remove('hidden');
+        function displayFinalResult() {
+            if (correctSign && correctCoef && correctVar && correctExp) {
+                document.getElementById('finalResult').innerHTML = "\\( -20x^5 \\)";
+                renderMathInElement(document.getElementById('finalResult'));  // Renderizar con KaTeX
+            } else {
+                document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
+            }
+        }
+
+        // Paso 1: Verificar la propiedad distributiva del ejercicio 12
+        function checkDistributive() {
+            const distInput1 = document.getElementById('distInput1').value.trim();
+            const distInput2 = document.getElementById('distInput2').value.trim();
+            const feedback = document.getElementById('feedbackDist');
+            if (distInput1 === '10x^2' && distInput2 === '15x') {
+                correctDist1 = true;
+                feedback.textContent = '¡Correcto! El primer término se ha distribuido correctamente.';
+                feedback.className = 'correct';
+                document.getElementById('step6').classList.remove('hidden');
+            } else {
+                correctDist1 = false;
+                feedback.textContent = 'Incorrecto. El resultado debería ser \( 10x^2 \) y \( 15x \).';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Paso 2: Verificar la propiedad distributiva con el segundo término del ejercicio 12
+        function checkDistributive2() {
+            const distInput3 = document.getElementById('distInput3').value.trim();
+            const distInput4 = document.getElementById('distInput4').value.trim();
+            const feedback = document.getElementById('feedbackDist2');
+            if (distInput3 === '-8x' && distInput4 === '-12') {
+                correctDist2 = true;
+                feedback.textContent = '¡Correcto! El segundo término se ha distribuido correctamente.';
+                feedback.className = 'correct';
+                document.getElementById('step7').classList.remove('hidden');
+            } else {
+                correctDist2 = false;
+                feedback.textContent = 'Incorrecto. El resultado debería ser \( -8x \) y \( -12 \).';
+                feedback.className = 'incorrect';
+            }
+        }
+
+        // Paso 3: Verificar el resultado final del ejercicio 12
+        function checkFinalBinomial() {
+            const finalBinomial = document.getElementById('finalBinomial').value.trim();
+            const feedback = document.getElementById('feedbackFinalBinomial');
+            if (finalBinomial === '-12 + 7x + 10x^2') {
+                feedback.textContent = '¡Correcto! El resultado final es \( -12 + 7x + 10x^2 \).';
+                feedback.className = 'correct';
+            } else {
+                feedback.textContent = 'Incorrecto. El resultado final debería ser \( -12 + 7x + 10x^2 \).';
+                feedback.className = 'incorrect';
+            }
+            renderMathInElement(document.getElementById('feedbackFinalBinomial'));
         }
     </script>
 </body>

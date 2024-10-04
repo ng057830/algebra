@@ -73,8 +73,8 @@ function loadExercise11() {
             <p>Ya hemos encontrado el signo, multiplicado los coeficientes, y sumado los exponentes. Ahora juntamos todo. El resultado será:</p>
             <ul>
                 <li>El signo es negativo.</li>
-                <li>El coeficiente es <span class="math">-20</span>.</li>
-                <li>La variable es <span class="math">\\( x \\)</span> con exponente <span class="math">5</span>.</li>
+                <li>El coeficiente es <span class="math">\\( -20 \\)</span>.</li>
+                <li>La variable es <span class="math">\\( x \\)</span> con exponente <span class="math">\\( 5 \\)</span>.</li>
             </ul>
             <p>El resultado final es:</p>
             <h2 id="finalResult"></h2>
@@ -100,6 +100,7 @@ function checkSign() {
         feedback.textContent = 'Incorrecto. El signo debe ser negativo, porque estás multiplicando un número positivo por uno negativo.';
         feedback.classList.add('wrong');
     }
+    renderMathInElement(document.getElementById('feedbackSign')); // KaTeX en el feedback
 }
 
 function checkCoef() {
@@ -113,6 +114,7 @@ function checkCoef() {
         feedback.textContent = 'Incorrecto. El coeficiente correcto es -20.';
         feedback.classList.add('wrong');
     }
+    renderMathInElement(document.getElementById('feedbackCoef')); // KaTeX en el feedback
 }
 
 function checkVariable() {
@@ -127,6 +129,7 @@ function checkVariable() {
         feedback.textContent = 'Incorrecto. Debes seleccionar la variable \\( x \\).';
         feedback.classList.add('wrong');
     }
+    renderMathInElement(document.getElementById('feedbackVar')); // KaTeX en el feedback
 }
 
 function checkExp() {
@@ -140,6 +143,7 @@ function checkExp() {
         feedback.textContent = 'Incorrecto. La suma correcta de los exponentes es 5.';
         feedback.classList.add('wrong');
     }
+    renderMathInElement(document.getElementById('feedbackExp')); // KaTeX en el feedback
 }
 
 function showFinalResult() {

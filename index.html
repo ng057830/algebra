@@ -82,10 +82,10 @@
         <h1>Ejercicio 11: Multiplicación de Monomios</h1>
         
         <!-- Introducción -->
-        <p>En este ejercicio aprenderemos a multiplicar dos monomios: <span class="math">\( 4x^2 \cdot (-5x^3) \)</span>. Vamos a resolverlo paso a paso.</p>
+        <p>Vamos a multiplicar dos monomios: <span class="math">\( 4x^2 \cdot (-5x^3) \)</span>. Resolveremos este problema paso a paso para que puedas entenderlo claramente.</p>
         
-        <!-- Paso 1: Identificar los signos -->
-        <p><strong>Paso 1:</strong> ¿Qué signo tiene el resultado de multiplicar un número positivo por un número negativo?</p>
+        <!-- Paso 1: Identificar el signo -->
+        <p><strong>Paso 1:</strong> Multiplicar un número positivo por un número negativo da como resultado un número negativo. ¿Cuál crees que es el signo del resultado?</p>
         <select id="signSelect">
             <option value="positive">Positivo (+)</option>
             <option value="negative">Negativo (-)</option>
@@ -95,42 +95,44 @@
 
         <!-- Paso 2: Multiplicar los coeficientes -->
         <div id="step2" class="hidden">
-            <p><strong>Paso 2:</strong> Multiplica los coeficientes numéricos: <span class="math">\( 4 \)</span> y <span class="math">\( -5 \)</span></p>
+            <p><strong>Paso 2:</strong> Ahora multiplica los números (coeficientes) de los monomios:</p>
+            <p><span class="math">\( 4 \cdot (-5) \)</span></p>
             <input type="text" id="coefInput" placeholder="Escribe el resultado">
             <button onclick="checkCoef()">Comprobar</button>
             <p id="feedbackCoef"></p>
-            <p>Recuerda, al multiplicar un número positivo por un número negativo, el resultado será negativo.</p>
+            <p>Recuerda, multiplicar un número positivo por uno negativo siempre da un resultado negativo.</p>
         </div>
 
         <!-- Paso 3: Identificar la variable -->
         <div id="step3" class="hidden">
-            <p><strong>Paso 3:</strong> ¿Cuál es la variable involucrada en este caso?</p>
-            <input type="checkbox" id="varX"> <label for="varX">\\( x \\)</label>
+            <p><strong>Paso 3:</strong> Ahora observa la variable que estamos multiplicando. En ambos términos aparece la misma variable:</p>
+            <p><span class="math">\( x^2 \cdot x^3 \)</span></p>
+            <p>Selecciona la variable involucrada:</p>
+            <input type="checkbox" id="varX"> <label for="varX">\( x \)</label>
             <button onclick="checkVariable()">Comprobar</button>
             <p id="feedbackVar"></p>
         </div>
 
         <!-- Paso 4: Sumar los exponentes -->
         <div id="step4" class="hidden">
-            <p><strong>Paso 4:</strong> Suma los exponentes de \\( x^2 \\) y \\( x^3 \\):</p>
-            <p>Cuando multiplicamos potencias con la misma base, sumamos los exponentes. En este caso:</p>
+            <p><strong>Paso 4:</strong> Cuando multiplicamos potencias con la misma base, sumamos los exponentes. En este caso, los exponentes son:</p>
             <ul>
-                <li>El exponente de \\( x \\) en el primer término es 2</li>
-                <li>El exponente de \\( x \\) en el segundo término es 3</li>
+                <li><span class="math">\( x^2 \)</span> en el primer término</li>
+                <li><span class="math">\( x^3 \)</span> en el segundo término</li>
             </ul>
-            <p>Escribe el resultado de sumar los exponentes:</p>
-            <input type="text" id="expInput" placeholder="Escribe el resultado">
+            <p>Suma los exponentes:</p>
+            <input type="text" id="expInput" placeholder="Escribe la suma de los exponentes">
             <button onclick="checkExp()">Comprobar</button>
             <p id="feedbackExp"></p>
         </div>
 
         <!-- Paso 5: Resultado final -->
         <div id="step5" class="hidden">
-            <p><strong>Paso 5:</strong> Ahora juntamos todo: el signo, los coeficientes y la variable con su exponente:</p>
+            <p><strong>Paso 5:</strong> Ahora juntamos todo. Hemos determinado que:</p>
             <ul>
-                <li>El signo es negativo</li>
-                <li>El coeficiente es <span class="math">-20</span></li>
-                <li>La variable es \\( x \\) y su exponente es 5</li>
+                <li>El signo del resultado es negativo.</li>
+                <li>El coeficiente es <span class="math">-20</span>.</li>
+                <li>La variable es \( x \), y la suma de sus exponentes es 5.</li>
             </ul>
             <h2>Resultado final:</h2>
             <p id="finalResult"></p>
@@ -182,12 +184,13 @@
             const feedback = document.getElementById('feedbackVar');
             if (varX) {
                 correctVar = true;
-                feedback.textContent = '¡Correcto! La variable es \\( x \\).';
+                feedback.textContent = '¡Correcto! La variable es \( x \).';
                 feedback.className = 'correct';
                 document.getElementById('step4').classList.remove('hidden');
+                renderMathInElement(document.getElementById('step4'));
             } else {
                 correctVar = false;
-                feedback.textContent = 'Incorrecto. La variable en este caso es \\( x \\).';
+                feedback.textContent = 'Incorrecto. La variable involucrada es \( x \).';
                 feedback.className = 'incorrect';
             }
             renderMathInElement(document.getElementById('feedbackVar'));

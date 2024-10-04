@@ -143,8 +143,14 @@
         // Mostrar resultado final
         function displayFinalResult() {
             if (correctSign && correctCoef && correctExp) {
-                document.getElementById('finalResult').innerHTML = '\\[ -20x^5 \\]';
-                MathJax.typeset();  // Renderizar LaTeX
+                // Asegurar que MathJax esté cargado antes de usarlo
+                if (window.MathJax) {
+                    MathJax.typesetPromise(["\\[ -20x^5 \\]"]).then(() => {
+                        document.getElementById('finalResult').innerHTML = "\\[ -20x^5 \\]";
+                    });
+                } else {
+                    document.getElementById('finalResult').textContent = 'No se ha cargado MathJax aún.';
+                }
             } else {
                 document.getElementById('finalResult').textContent = 'Por favor, completa todos los pasos correctamente.';
             }

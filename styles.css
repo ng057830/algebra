@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eef;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#game {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.question {
+    margin-bottom: 15px;
+}
+
+.question p {
+    font-size: 1.2em;
+}
+
+.options {
+    margin-bottom: 15px;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], select {
+    width: 200px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.hint {
+    color: #006400;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.error {
+    color: #b22222;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.correct {
+    color: #006400;
+    font-style: italic;
+    margin-top: 5px;
+}

@@ -2,229 +2,25 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio de Matemáticas: Multiplicación de Monomios con Variables</title>
-
-    <!-- Cargar KaTeX desde CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-            onload="renderMathInElement(document.body);"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        p {
-            font-size: 18px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .math {
-            font-size: 20px;
-        }
-
-        .correct {
-            color: green;
-        }
-
-        .incorrect {
-            color: red;
-        }
-
-    </style>
+    <title>Juego: Multiplicación Algebraica</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 </head>
 <body>
-    <div class="container" id="exerciseContainer">
-        <h1>Multiplicación de Monomios con Variables</h1>
-        
-        <!-- Introducción -->
-        <p>Vamos a multiplicar dos monomios: <span class="math">\( -2m^3n^2 \cdot 4mn \)</span>. Resolveremos este problema paso a paso para que lo entiendas claramente.</p>
-        
-        <!-- Paso 1: Preguntar por el signo -->
-        <p><strong>Paso 1:</strong> Cuando multiplicas un número negativo por uno positivo, ¿cuál crees que será el signo del resultado?</p>
-        <select id="signSelect">
-            <option value="positive">Positivo (+)</option>
-            <option value="negative">Negativo (-)</option>
-        </select>
-        <button onclick="checkSign()">Comprobar</button>
-        <p id="feedbackSign"></p>
-
-        <!-- Paso 2: Multiplicar los coeficientes -->
-        <div id="step2" class="hidden">
-            <p><strong>Paso 2:</strong> Multiplica los coeficientes numéricos:</p>
-            <p><span class="math">\( -2 \cdot 4 \)</span></p>
-            <input type="text" id="coefInput" placeholder="Escribe el resultado">
-            <button onclick="checkCoef()">Comprobar</button>
-            <p id="feedbackCoef"></p>
-        </div>
-
-        <!-- Paso 3: Identificar las variables -->
-        <div id="step3" class="hidden">
-            <p><strong>Paso 3:</strong> Selecciona las variables que aparecen en ambos monomios:</p>
-            <input type="checkbox" id="varM"> <label for="varM">\( m \)</label>
-            <input type="checkbox" id="varN"> <label for="varN">\( n \)</label>
-            <input type="checkbox" id="varP"> <label for="varP">\( p \)</label>
-            <input type="checkbox" id="varF"> <label for="varF">\( f \)</label>
-            <input type="checkbox" id="varG"> <label for="varG">\( g \)</label>
-            <input type="checkbox" id="varH"> <label for="varH">\( h \)</label>
-            <input type="checkbox" id="varX"> <label for="varX">\( x \)</label>
-            <input type="checkbox" id="varY"> <label for="varY">\( y \)</label>
-            <button onclick="checkVariable()">Comprobar</button>
-            <p id="feedbackVar"></p>
-        </div>
-
-        <!-- Paso 4: Sumar los exponentes -->
-        <div id="step4" class="hidden">
-            <p><strong>Paso 4:</strong> Ahora suma los exponentes de las variables involucradas.</p>
-            <p><span class="math">\( m^3 \cdot m^1 \) y \( n^2 \cdot n^1 \)</span></p>
-            <p>Escribe los nuevos exponentes de \( m \) y \( n \):</p>
-            <input type="text" id="expInputM" placeholder="Exponente de \( m \)">
-            <input type="text" id="expInputN" placeholder="Exponente de \( n \)">
-            <button onclick="checkExp()">Comprobar</button>
-            <p id="feedbackExp"></p>
-        </div>
-
-        <!-- Resultado final -->
-        <div id="finalResult" class="hidden">
-            <p><strong>Paso 5:</strong> Hemos determinado que:</p>
-            <ul>
-                <li>El signo del resultado es negativo.</li>
-                <li>El coeficiente es <span class="math">-8</span>.</li>
-                <li>Las variables son \( m \) y \( n \), y sus nuevos exponentes son \( m^4 \) y \( n^3 \).</li>
-            </ul>
-            <h2>Resultado final:</h2>
-            <p id="finalProjection">\( -8m^4n^3 \)</p>
+    <div class="container">
+        <h1>Aprendamos a Multiplicar \( 3x \cdot (2xy + 4y - 5) \)</h1>
+        <div id="game">
+            <!-- El contenido del juego se cargará aquí -->
         </div>
     </div>
 
-    <script>
-        // Variables para almacenar respuestas correctas
-        let correctSign = false;
-        let correctCoef = false;
-        let correctVar = false;
-        let correctExp = false;
-
-        // Paso 1: Verificar el signo del resultado
-        function checkSign() {
-            const selectedSign = document.getElementById('signSelect').value;
-            const feedback = document.getElementById('feedbackSign');
-            if (selectedSign === 'negative') {
-                correctSign = true;
-                feedback.textContent = '¡Correcto! El signo es negativo.';
-                feedback.className = 'correct';
-                document.getElementById('step2').classList.remove('hidden');
-            } else {
-                correctSign = false;
-                feedback.textContent = 'Incorrecto.';
-                feedback.className = 'incorrect';
-            }
-        }
-
-        // Paso 2: Verificar los coeficientes
-        function checkCoef() {
-            const coefInput = document.getElementById('coefInput').value.trim();
-            const feedback = document.getElementById('feedbackCoef');
-            if (coefInput === '-8') {
-                correctCoef = true;
-                feedback.textContent = '¡Correcto! El coeficiente es -8.';
-                feedback.className = 'correct';
-                document.getElementById('step3').classList.remove('hidden');
-            } else {
-                feedback.textContent = 'Incorrecto.';
-                feedback.className = 'incorrect';
-            }
-        }
-
-        // Paso 3: Verificar las variables seleccionadas
-        function checkVariable() {
-            const varM = document.getElementById('varM').checked;
-            const varN = document.getElementById('varN').checked;
-            const varP = document.getElementById('varP').checked;
-            const varF = document.getElementById('varF').checked;
-            const varG = document.getElementById('varG').checked;
-            const varH = document.getElementById('varH').checked;
-            const varX = document.getElementById('varX').checked;
-            const varY = document.getElementById('varY').checked;
-            const feedback = document.getElementById('feedbackVar');
-            if (varM && varN && !varP && !varF && !varG && !varH && !varX && !varY) {
-                correctVar = true;
-                feedback.textContent = '¡Correcto! Las variables involucradas son \( m \) y \( n \).';
-                feedback.className = 'correct';
-                document.getElementById('step4').classList.remove('hidden');
-                renderMathInElement(document.getElementById('step4'));
-            } else {
-                feedback.textContent = 'Incorrecto.';
-                feedback.className = 'incorrect';
-            }
-            renderMathInElement(document.getElementById('feedbackVar'));
-        }
-
-        // Paso 4: Verificar los exponentes
-        function checkExp() {
-            const expInputM = document.getElementById('expInputM').value.trim();
-            const expInputN = document.getElementById('expInputN').value.trim();
-            const feedback = document.getElementById('feedbackExp');
-            if (expInputM === '4' && expInputN === '3') {
-                correctExp = true;
-                feedback.textContent = '¡Correcto! Los nuevos exponentes son \( m^4 \) y \( n^3 \).';
-                feedback.className = 'correct';
-                document.getElementById('finalResult').classList.remove('hidden');
-                displayFinalResult();
-            } else {
-                feedback.textContent = 'Incorrecto.';
-                feedback.className = 'incorrect';
-            }
-        }
-
-        // Mostrar resultado final
-        function displayFinalResult() {
-            document.getElementById('finalProjection').innerHTML = "\\( -8m^4n^3 \\)";
-            renderMathInElement(document.getElementById('finalProjection'));  // Renderizar con KaTeX
-        }
-    </script>
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+    <!-- Auto-render extension -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    <!-- Tu archivo JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>

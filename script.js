@@ -365,11 +365,14 @@ function showStep(stepIndex) {
     feedbackDiv.id = 'feedback';
     gameDiv.appendChild(feedbackDiv);
 
+    // Renderizar las expresiones matemáticas en el nuevo contenido
     renderMathInElement(gameDiv, {
         delimiters: [
+            { left: "$$", right: "$$", display: true },
             { left: "\\(", right: "\\)", display: false },
             { left: "\\[", right: "\\]", display: true }
-        ]
+        ],
+        throwOnError: false
     });
 }
 
@@ -416,6 +419,16 @@ function checkAnswer() {
             feedbackDiv.innerHTML = '<p class="error">Vamos a intentarlo de nuevo, ¡tú puedes!</p>';
         }
     }
+
+    // Renderizar las expresiones matemáticas en el feedback
+    renderMathInElement(feedbackDiv, {
+        delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+        ],
+        throwOnError: false
+    });
 }
 
 // Función auxiliar para comparar arrays

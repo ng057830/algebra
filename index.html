@@ -2,248 +2,153 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Juego: Multiplicación Algebraica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Guiada: Propiedad Distributiva</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #eef;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
+            background-color: #f0f0f0;
             color: #333;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        #game {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
+        h3 {
+            color: #005f99;
         }
         .question {
-            margin-bottom: 15px;
-        }
-        .options {
-            margin-bottom: 15px;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"], select {
-            width: 200px;
-            padding: 5px;
-            font-size: 1em;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 1em;
-            margin-top: 10px;
+            margin: 1rem 0;
         }
         .hint {
-            color: #006400;
-            font-style: italic;
-            margin-top: 5px;
+            font-size: 0.9em;
+            color: #666;
         }
-        .error {
-            color: #b22222;
-            font-style: italic;
-            margin-top: 5px;
+        .options {
+            margin: 0.5rem 0;
         }
-        .correct {
-            color: #006400;
-            font-style: italic;
-            margin-top: 5px;
+        button {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #007acc;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005f99;
         }
     </style>
-    <!-- KaTeX CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Aprendamos a Multiplicar \( 3x \cdot (2xy + 4y - 5) \)</h1>
-        <div id="game">
-            <!-- El contenido del juego se cargará aquí -->
-        </div>
-    </div>
+    <h3>Actividad Guiada: Multiplicar \( 5m^2 \cdot (4mn + 2n^2 - 3m) \)</h3>
+    <div class="question" id="question-container"></div>
+    <div class="options" id="options-container"></div>
+    <button onclick="nextQuestion()">Siguiente Pregunta</button>
 
-    <!-- KaTeX JS -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
-    <!-- Auto-render extension -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"></script>
     <script>
-        // Datos del juego
-        const steps = [
+        const questions = [
             {
-                question: '¿Cuál es el monomio en la expresión \( 3x \cdot (2xy + 4y - 5) \)?',
-                type: 'checkbox',
-                options: ['\( 3x \)', '\( 2xy \)', '\( 4y \)', '\( -5 \)'],
-                correctOptions: [0],
+                question: "¿Cuál es el monomio en la expresión \(5m^2 \cdot (4mn + 2n^2 - 3m)\)?",
+                type: "checkbox",
+                options: [
+                    "5m^2",
+                    "4mn",
+                    "2n^2",
+                    "-3m"
+                ],
+                correct: [0],
                 hints: [
-                    'Un monomio está compuesto por un número y una variable.',
-                    'Busca el término que tiene solo una letra y un número, sin más operaciones.',
-                    'No te fijes en los términos dentro del paréntesis, busca el que está multiplicando al paréntesis.',
-                    'El monomio no tiene varios términos, es una combinación directa de un número y una sola letra.'
+                    "Un monomio está compuesto por un número y una variable.",
+                    "Busca el término que tiene solo una constante y variables, sin operaciones adicionales.",
+                    "El monomio debe estar fuera del paréntesis, ya que está multiplicando al polinomio."
                 ]
             },
             {
-                question: '¿Cuántos términos tiene el polinomio \( 2xy + 4y - 5 \)?',
-                type: 'combobox',
-                options: ['1 término', '2 términos', '3 términos', '4 términos'],
-                correctOption: 2,
+                question: "¿Cuántos términos tiene el polinomio \(4mn + 2n^2 - 3m\)?",
+                type: "combobox",
+                options: [
+                    "1 término",
+                    "2 términos",
+                    "3 términos",
+                    "4 términos"
+                ],
+                correct: 2,
                 hints: [
-                    'Los términos de un polinomio están separados por signos de suma o resta.',
-                    'Cuenta cuántas veces ves los signos \( + \) o \( - \).',
-                    'Cada signo de suma o resta indica el final de un término y el comienzo de otro.',
-                    'Si hay más de una letra o número antes o después de un signo, eso indica que tienes varios términos.'
+                    "Los términos en un polinomio están separados por signos de suma o resta.",
+                    "Cuenta cuántas veces ves los signos \(+\) o \(-\).",
+                    "Revisa cada término, asegurándote de no confundir coeficientes con términos separados."
                 ]
-            }
+            },
+            // More questions following the same structure...
         ];
 
-        // Variables del juego
-        let currentStep = 0;
-        let hintIndex = 0;
+        let currentQuestionIndex = 0;
+        function renderQuestion(index) {
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            const question = questions[index];
 
-        // Inicializar el juego
-        function initGame() {
-            showStep(currentStep);
+            questionContainer.innerHTML = question.question;
+            optionsContainer.innerHTML = "";
+            if (question.type === "checkbox") {
+                question.options.forEach((option, i) => {
+                    optionsContainer.innerHTML += `
+                        <input type="checkbox" id="option${i}" name="question${index}" value="${i}">
+                        <label for="option${i}">${option}</label><br>
+                    `;
+                });
+            } else if (question.type === "combobox") {
+                optionsContainer.innerHTML = `<select id="combobox${index}">`;
+                question.options.forEach((option, i) => {
+                    optionsContainer.innerHTML += `<option value="${i}">${option}</option>`;
+                });
+                optionsContainer.innerHTML += `</select>`;
+            }
         }
 
-        // Mostrar la pregunta actual
-        function showStep(stepIndex) {
-            const gameDiv = document.getElementById('game');
-            gameDiv.innerHTML = '';
-
-            const step = steps[stepIndex];
-            hintIndex = 0; // Reiniciar el índice de pistas para cada pregunta
-
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
-            questionDiv.innerHTML = `<p>${step.question}</p>`;
-            gameDiv.appendChild(questionDiv);
-
-            // Crear opciones según el tipo de pregunta
-            if (step.type === 'checkbox') {
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'options';
-
-                step.options.forEach((option, index) => {
-                    const label = document.createElement('label');
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.name = 'option';
-                    input.value = index;
-                    label.appendChild(input);
-                    label.innerHTML += ` ${option}`;
-                    optionsDiv.appendChild(label);
+        function validateAnswer() {
+            const question = questions[currentQuestionIndex];
+            let correct = false;
+            if (question.type === "checkbox") {
+                const selected = [];
+                question.options.forEach((_, i) => {
+                    if (document.getElementById(`option${i}`).checked) {
+                        selected.push(i);
+                    }
                 });
-
-                gameDiv.appendChild(optionsDiv);
-            } else if (step.type === 'combobox') {
-                const select = document.createElement('select');
-                select.id = 'userInput';
-                step.options.forEach((option, index) => {
-                    const opt = document.createElement('option');
-                    opt.value = index;
-                    opt.text = option;
-                    select.appendChild(opt);
-                });
-                gameDiv.appendChild(select);
-            } else if (step.type === 'textbox') {
-                const inputElement = document.createElement('input');
-                inputElement.type = 'text';
-                inputElement.id = 'userInput';
-                gameDiv.appendChild(inputElement);
+                correct = JSON.stringify(selected) === JSON.stringify(question.correct);
+            } else if (question.type === "combobox") {
+                const selected = parseInt(document.getElementById(`combobox${currentQuestionIndex}`).value);
+                correct = selected === question.correct;
             }
 
-            const submitButton = document.createElement('button');
-            submitButton.textContent = 'Enviar';
-            submitButton.onclick = checkAnswer;
-            gameDiv.appendChild(submitButton);
-
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.id = 'feedback';
-            gameDiv.appendChild(feedbackDiv);
-
-            renderMathInElement(gameDiv, {
-                delimiters: [
-                    { left: "$$", right: "$$", display: true },
-                    { left: "\\(", right: "\\)", display: false },
-                    { left: "\\[", right: "\\]", display: true }
-                ],
-                throwOnError: false
-            });
-        }
-
-        // Verificar la respuesta del usuario
-        function checkAnswer() {
-            const feedbackDiv = document.getElementById('feedback');
-            const step = steps[currentStep];
-            let userCorrect = false;
-
-            if (step.type === 'checkbox') {
-                const inputs = document.querySelectorAll('input[name="option"]:checked');
-                const selectedOptions = Array.from(inputs).map(input => parseInt(input.value));
-
-                // Verificar si las opciones seleccionadas son correctas
-                if (arraysEqual(selectedOptions, step.correctOptions)) {
-                    userCorrect = true;
-                }
-            } else if (step.type === 'combobox') {
-                const select = document.getElementById('userInput');
-                const selectedOption = parseInt(select.value);
-                if (selectedOption === step.correctOption) {
-                    userCorrect = true;
-                }
-            } else if (step.type === 'textbox') {
-                const userInput = document.getElementById('userInput').value.trim();
-                if (validateAnswer(userInput, step.correctAnswer)) {
-                    userCorrect = true;
-                }
-            }
-
-            if (userCorrect) {
-                feedbackDiv.innerHTML = '<p class="correct">¡Muy bien! Has acertado.</p>';
-                currentStep++;
-                if (currentStep < steps.length) {
-                    setTimeout(() => showStep(currentStep), 1500);
-                } else {
-                    feedbackDiv.innerHTML += '<p>¡Felicidades! Has completado el ejercicio.</p>';
-                }
+            if (correct) {
+                alert("¡Correcto!");
             } else {
-                if (hintIndex < step.hints.length) {
-                    feedbackDiv.innerHTML = `<p class="hint">${step.hints[hintIndex]}</p>`;
-                    hintIndex++;
-                } else {
-                    feedbackDiv.innerHTML = '<p class="error">Vamos a intentarlo de nuevo, ¡tú puedes!</p>';
-                }
+                const hintIndex = Math.min(questions[currentQuestionIndex].hints.length - 1, Math.floor(Math.random() * questions[currentQuestionIndex].hints.length));
+                alert("Incorrecto. Pista: " + questions[currentQuestionIndex].hints[hintIndex]);
             }
         }
 
-        // Función auxiliar para comparar arrays
-        function arraysEqual(a, b) {
-            if (a.length !== b.length) return false;
-            a.sort(); b.sort();
-            for (let i = 0; i < a.length; i++) {
-                if (a[i] !== b[i]) return false;
+        function nextQuestion() {
+            validateAnswer();
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                renderQuestion(currentQuestionIndex);
+            } else {
+                alert("¡Has completado la actividad!");
+                currentQuestionIndex = 0; // Reiniciar para practicar de nuevo
+                renderQuestion(currentQuestionIndex);
             }
-            return true;
         }
 
-        // Función para validar la respuesta del usuario en preguntas de texto
-        function validateAnswer(input, correctAnswer) {
-            const cleanedInput = input.replace(/\s+/g, '').toLowerCase();
-            const cleanedAnswer = correctAnswer.replace(/\s+/g, '').toLowerCase();
-            return cleanedInput === cleanedAnswer;
-        }
-
-        // Iniciar el juego cuando la página cargue
-        window.onload = initGame;
+        renderQuestion(currentQuestionIndex);
     </script>
 </body>
 </html>

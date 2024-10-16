@@ -2,153 +2,403 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividad Guiada: Propiedad Distributiva</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+    <title>Resolviendo Ecuaciones Paso a Paso</title>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <!-- Auto-render extension -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
         }
-        h3 {
-            color: #005f99;
+        h2, h3 {
+            color: #004080;
         }
-        .question {
-            margin: 1rem 0;
+        .equation-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e6f2ff;
+            border-radius: 10px;
+        }
+        .equation {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .step-container {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 2px solid #cce7ff;
+            border-radius: 10px;
+        }
+        .step-container button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .step-container button:hover {
+            background-color: #004080;
         }
         .hint {
-            font-size: 0.9em;
-            color: #666;
+            color: #ff6600;
+            margin-top: 10px;
         }
-        .options {
-            margin: 0.5rem 0;
+        .correct {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
         }
-        button {
-            margin-top: 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: #007acc;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .incorrect {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
         }
-        button:hover {
-            background-color: #005f99;
+        #completionMessage {
+            font-size: 20px;
+            color: #004080;
+            margin-top: 30px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        input[type="number"], input[type="text"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h3>Actividad Guiada: Multiplicar \( 5m^2 \cdot (4mn + 2n^2 - 3m) \)</h3>
-    <div class="question" id="question-container"></div>
-    <div class="options" id="options-container"></div>
-    <button onclick="nextQuestion()">Siguiente Pregunta</button>
+    <h2>Resolviendo Ecuaciones Paso a Paso</h2>
+    <div id="equationContainer"></div>
+    <div id="completionMessage"></div>
 
     <script>
-        const questions = [
+        const equations = [
             {
-                question: "¿Cuál es el monomio en la expresión \(5m^2 \cdot (4mn + 2n^2 - 3m)\)?",
-                type: "checkbox",
-                options: [
-                    "5m^2",
-                    "4mn",
-                    "2n^2",
-                    "-3m"
-                ],
-                correct: [0],
-                hints: [
-                    "Un monomio está compuesto por un número y una variable.",
-                    "Busca el término que tiene solo una constante y variables, sin operaciones adicionales.",
-                    "El monomio debe estar fuera del paréntesis, ya que está multiplicando al polinomio."
+                equation: "\\[ \\frac{6}{x} = \\frac{3}{4} \\]",
+                steps: [
+                    {
+                        prompt: "Multiplicamos ambos lados por \( x \):",
+                        type: "select",
+                        options: [
+                            "\\(6 = \\frac{3}{4} x\\)",
+                            "\\(\\frac{6x}{x} = \\frac{3}{4} x\\)",
+                            "\\(6x = \\frac{3}{4}\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Al multiplicar ambos lados por \( x \), el \( x \) en el denominador se elimina en el lado izquierdo.",
+                            "La ecuación queda: \(6 = \\frac{3}{4} x\\)."
+                        ]
+                    },
+                    {
+                        prompt: "Multiplicamos ambos lados por 4 para eliminar el denominador:",
+                        type: "select",
+                        options: [
+                            "\\(24 = 3x\\)",
+                            "\\(6 = 3x\\)",
+                            "\\(24 = \\frac{3}{4} x\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Multiplica ambos lados por 4: \(4 \\times 6 = 4 \\times \\frac{3}{4} x\\).",
+                            "Esto simplifica a \(24 = 3x\\)."
+                        ]
+                    },
+                    {
+                        prompt: "Dividimos ambos lados entre 3 para despejar \( x \):",
+                        type: "input",
+                        correctAnswer: "8",
+                        hints: [
+                            "Divide ambos lados entre 3: \( \\frac{24}{3} = x \\).",
+                            "Así, \( x = 8 \\)."
+                        ]
+                    }
                 ]
             },
             {
-                question: "¿Cuántos términos tiene el polinomio \(4mn + 2n^2 - 3m\)?",
-                type: "combobox",
-                options: [
-                    "1 término",
-                    "2 términos",
-                    "3 términos",
-                    "4 términos"
-                ],
-                correct: 2,
-                hints: [
-                    "Los términos en un polinomio están separados por signos de suma o resta.",
-                    "Cuenta cuántas veces ves los signos \(+\) o \(-\).",
-                    "Revisa cada término, asegurándote de no confundir coeficientes con términos separados."
+                equation: "\\[ \\frac{-4}{v} = \\frac{1}{2} \\]",
+                steps: [
+                    {
+                        prompt: "Multiplicamos ambos lados por \( v \):",
+                        type: "select",
+                        options: [
+                            "\\(-4 = \\frac{1}{2} v\\)",
+                            "\\(-4v = \\frac{1}{2}\\)",
+                            "\\(\\frac{-4v}{v} = \\frac{1}{2} v\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Al multiplicar ambos lados por \( v \), el \( v \) en el denominador se elimina en el lado izquierdo.",
+                            "La ecuación queda: \(-4 = \\frac{1}{2} v\\)."
+                        ]
+                    },
+                    {
+                        prompt: "Multiplicamos ambos lados por 2 para eliminar el denominador:",
+                        type: "select",
+                        options: [
+                            "\\(-8 = v\\)",
+                            "\\(-4 = v\\)",
+                            "\\(-2 = v\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Multiplica ambos lados por 2: \(2 \\times -4 = 2 \\times \\frac{1}{2} v\\).",
+                            "Esto simplifica a \(-8 = v\\)."
+                        ]
+                    },
+                    {
+                        prompt: "El valor de \( v \) es:",
+                        type: "input",
+                        correctAnswer: "-8",
+                        hints: [
+                            "Ya tenemos \(-8 = v\), por lo tanto, \( v = -8 \\)."
+                        ]
+                    }
                 ]
             },
-            // More questions following the same structure...
+            {
+                equation: "\\[ 9 = 3y \\]",
+                steps: [
+                    {
+                        prompt: "Dividimos ambos lados entre 3 para despejar \( y \):",
+                        type: "input",
+                        correctAnswer: "3",
+                        hints: [
+                            "Divide ambos lados entre 3: \( \\frac{9}{3} = y \\).",
+                            "Así, \( y = 3 \\)."
+                        ]
+                    }
+                ]
+            },
+            {
+                equation: "\\[ -2 = \\frac{-k}{5} \\]",
+                steps: [
+                    {
+                        prompt: "Multiplicamos ambos lados por 5 para eliminar el denominador:",
+                        type: "select",
+                        options: [
+                            "\\(-10 = -k\\)",
+                            "\\(-2 = -5k\\)",
+                            "\\(-10 = k\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Multiplica ambos lados por 5: \(5 \\times -2 = 5 \\times \\frac{-k}{5}\\).",
+                            "Esto simplifica a \(-10 = -k\\)."
+                        ]
+                    },
+                    {
+                        prompt: "Multiplicamos ambos lados por \(-1\) para despejar \( k \):",
+                        type: "select",
+                        options: [
+                            "\\(k = 10\\)",
+                            "\\(k = -10\\)",
+                            "\\(k = 0\\)"
+                        ],
+                        correctOption: 0,
+                        hints: [
+                            "Multiplicando por \(-1\), cambiamos el signo de ambos lados.",
+                            "Así, \( k = 10 \\)."
+                        ]
+                    },
+                    {
+                        prompt: "El valor de \( k \) es:",
+                        type: "input",
+                        correctAnswer: "10",
+                        hints: [
+                            "Ya hemos encontrado que \( k = 10 \\)."
+                        ]
+                    }
+                ]
+            }
         ];
 
-        let currentQuestionIndex = 0;
-        function renderQuestion(index) {
-            const questionContainer = document.getElementById("question-container");
-            const optionsContainer = document.getElementById("options-container");
-            const question = questions[index];
+        let currentEquationIndex = 0;
+        let currentStepIndex = 0;
+        let hintIndex = 0;
 
-            questionContainer.innerHTML = question.question;
-            optionsContainer.innerHTML = "";
-            if (question.type === "checkbox") {
-                question.options.forEach((option, i) => {
-                    optionsContainer.innerHTML += `
-                        <input type="checkbox" id="option${i}" name="question${index}" value="${i}">
-                        <label for="option${i}">${option}</label><br>
+        function renderCurrentStep() {
+            const equationContainer = document.getElementById('equationContainer');
+
+            // Limpiar el contenido previo si es una nueva ecuación
+            if (currentStepIndex === 0) {
+                equationContainer.innerHTML = '';
+            }
+
+            if (currentEquationIndex >= equations.length) {
+                document.getElementById('completionMessage').innerHTML = "¡Has completado todas las ecuaciones! ¡Buen trabajo!";
+                return;
+            }
+
+            const currentEquation = equations[currentEquationIndex];
+            const currentStep = currentEquation.steps[currentStepIndex];
+
+            // Mostrar la ecuación original si es el primer paso
+            if (currentStepIndex === 0) {
+                const equationDiv = document.createElement('div');
+                equationDiv.className = 'equation-container';
+                equationDiv.id = 'equation-' + currentEquationIndex;
+                equationDiv.innerHTML = `<div class="equation">Ecuación: ${currentEquation.equation}</div>`;
+                equationContainer.appendChild(equationDiv);
+            }
+
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step-container';
+            stepDiv.id = `step-${currentEquationIndex}-${currentStepIndex}`;
+
+            const prompt = document.createElement('p');
+            prompt.innerHTML = currentStep.prompt;
+            stepDiv.appendChild(prompt);
+
+            let inputElement;
+
+            if (currentStep.type === 'select') {
+                inputElement = document.createElement('div');
+                currentStep.options.forEach((optionText, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.innerHTML = `
+                        <input type="radio" name="answer-${currentEquationIndex}-${currentStepIndex}" id="option${index}" value="${index}">
+                        <label for="option${index}">${optionText}</label>
                     `;
+                    inputElement.appendChild(optionDiv);
                 });
-            } else if (question.type === "combobox") {
-                optionsContainer.innerHTML = `<select id="combobox${index}">`;
-                question.options.forEach((option, i) => {
-                    optionsContainer.innerHTML += `<option value="${i}">${option}</option>`;
-                });
-                optionsContainer.innerHTML += `</select>`;
+            } else if (currentStep.type === 'input') {
+                inputElement = document.createElement('div');
+                inputElement.innerHTML = `<input type="${isNaN(currentStep.correctAnswer) ? 'text' : 'number'}" id="userInput-${currentEquationIndex}-${currentStepIndex}">`;
             }
+
+            stepDiv.appendChild(inputElement);
+
+            const checkButton = document.createElement('button');
+            checkButton.innerHTML = 'Comprobar';
+            checkButton.onclick = function() { checkAnswer(currentEquationIndex, currentStepIndex); };
+            stepDiv.appendChild(checkButton);
+
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = `feedback-${currentEquationIndex}-${currentStepIndex}`;
+            stepDiv.appendChild(feedbackDiv);
+
+            equationContainer.appendChild(stepDiv);
+
+            renderMathInElement(equationContainer, {
+                delimiters: [
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
         }
 
-        function validateAnswer() {
-            const question = questions[currentQuestionIndex];
-            let correct = false;
-            if (question.type === "checkbox") {
-                const selected = [];
-                question.options.forEach((_, i) => {
-                    if (document.getElementById(`option${i}`).checked) {
-                        selected.push(i);
+        function checkAnswer(equationIndex, stepIndex) {
+            const feedbackDiv = document.getElementById(`feedback-${equationIndex}-${stepIndex}`);
+            const currentEquation = equations[equationIndex];
+            const currentStep = currentEquation.steps[stepIndex];
+
+            let userAnswer;
+
+            if (currentStep.type === 'select') {
+                const selectedOption = document.querySelector(`input[name="answer-${equationIndex}-${stepIndex}"]:checked`);
+                if (selectedOption) {
+                    userAnswer = parseInt(selectedOption.value);
+                } else {
+                    feedbackDiv.innerHTML = '<span class="incorrect">Por favor, selecciona una opción.</span>';
+                    return;
+                }
+            } else if (currentStep.type === 'input') {
+                userAnswer = document.getElementById(`userInput-${equationIndex}-${stepIndex}`).value.trim();
+                if (userAnswer === '') {
+                    feedbackDiv.innerHTML = '<span class="incorrect">Por favor, ingresa tu respuesta.</span>';
+                    return;
+                }
+            }
+
+            let isCorrect = false;
+
+            if (currentStep.type === 'select') {
+                isCorrect = userAnswer === currentStep.correctOption;
+            } else if (currentStep.type === 'input') {
+                isCorrect = userAnswer === currentStep.correctAnswer;
+            }
+
+            if (isCorrect) {
+                feedbackDiv.innerHTML = '<span class="correct">¡Correcto!</span>';
+                hintIndex = 0;
+                currentStepIndex++;
+
+                if (currentStepIndex >= currentEquation.steps.length) {
+                    // Ocultar la ecuación actual
+                    setTimeout(() => {
+                        const equationDiv = document.getElementById('equation-' + equationIndex);
+                        equationDiv.style.display = 'none';
+                        currentEquationIndex++;
+                        currentStepIndex = 0;
+                        renderCurrentStep();
+                    }, 2000);
+                } else {
+                    renderCurrentStep();
+                }
+            } else {
+                if (hintIndex < currentStep.hints.length) {
+                    feedbackDiv.innerHTML = `<span class="hint">Pista: ${currentStep.hints[hintIndex]}</span>`;
+                    hintIndex++;
+                } else {
+                    let correctResponse = '';
+                    if (currentStep.type === 'select') {
+                        correctResponse = currentStep.options[currentStep.correctOption];
+                    } else if (currentStep.type === 'input') {
+                        correctResponse = currentStep.correctAnswer;
                     }
-                });
-                correct = JSON.stringify(selected) === JSON.stringify(question.correct);
-            } else if (question.type === "combobox") {
-                const selected = parseInt(document.getElementById(`combobox${currentQuestionIndex}`).value);
-                correct = selected === question.correct;
+                    feedbackDiv.innerHTML = `<span class="incorrect">Respuesta incorrecta. La respuesta correcta es: ${correctResponse}</span>`;
+                    hintIndex = 0;
+                    currentStepIndex++;
+                    if (currentStepIndex >= currentEquation.steps.length) {
+                        // Ocultar la ecuación actual
+                        setTimeout(() => {
+                            const equationDiv = document.getElementById('equation-' + equationIndex);
+                            equationDiv.style.display = 'none';
+                            currentEquationIndex++;
+                            currentStepIndex = 0;
+                            renderCurrentStep();
+                        }, 4000);
+                    } else {
+                        renderCurrentStep();
+                    }
+                }
             }
 
-            if (correct) {
-                alert("¡Correcto!");
-            } else {
-                const hintIndex = Math.min(questions[currentQuestionIndex].hints.length - 1, Math.floor(Math.random() * questions[currentQuestionIndex].hints.length));
-                alert("Incorrecto. Pista: " + questions[currentQuestionIndex].hints[hintIndex]);
-            }
+            renderMathInElement(feedbackDiv, {
+                delimiters: [
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
         }
 
-        function nextQuestion() {
-            validateAnswer();
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                renderQuestion(currentQuestionIndex);
-            } else {
-                alert("¡Has completado la actividad!");
-                currentQuestionIndex = 0; // Reiniciar para practicar de nuevo
-                renderQuestion(currentQuestionIndex);
-            }
-        }
-
-        renderQuestion(currentQuestionIndex);
+        // Iniciar el juego
+        renderCurrentStep();
+    </script>
+    <!-- KaTeX Auto-render -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            });
+        });
     </script>
 </body>
 </html>
